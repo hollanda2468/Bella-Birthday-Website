@@ -88,9 +88,15 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(() => {
             const randomIndex = Math.floor(Math.random() * reasons.length);
             reasonText.textContent = reasons[randomIndex];
+
+            // **Reset animation before replaying**
+            reasonText.style.animation = "none"; // Reset animation
+            void reasonText.offsetWidth; // Force reflow
+            reasonText.style.animation = "fadeIn 1s ease-in-out"; // Restart animation
+
             reasonContainer.classList.remove("hidden");
             button.textContent = "Show Me Another Reason";
             button.disabled = false;
-        }, 2000); // 2-second delay before revealing
+        }, 5000); // 2-second delay before revealing
     });
 });
