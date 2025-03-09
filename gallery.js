@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const imageFolder = "assets/images/";
-    const response = await fetch("image-list.txt");
+    const response = await fetch(imageFolder + "image-list.txt");
     const imageFiles = (await response.text()).trim().split("\n");
 
     const gallery = document.getElementById("gallery");
@@ -11,19 +11,25 @@ document.addEventListener("DOMContentLoaded", async function () {
         slide.classList.add("swiper-slide");
 
         let img = document.createElement("img");
-        img.src = imageFolder + file;
+        img.setAttribute("data-src", imageFolder + file); // Lazy load using data-src
         img.alt = "Memory";
+        img.classList.add("swiper-lazy");
+
+        let loader = document.createElement("div");
+        loader.classList.add("swiper-lazy-preloader");
 
         slide.appendChild(img);
+        slide.appendChild(loader);
         gallery.appendChild(slide);
     });
 
-    // Initialize Swiper.js
+    // Initialize Swiper.js with Lazy Loading
     let swiper = new Swiper(".swiper", {
         loop: true,
         autoplay: { delay: 3000, disableOnInteraction: false },
         pagination: { el: ".swiper-pagination", clickable: true },
         navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+        lazy: true, // Enables lazy loading
     });
 
     // Play/Pause Button Logic
