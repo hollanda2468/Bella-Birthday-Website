@@ -32,8 +32,12 @@ document.addEventListener("DOMContentLoaded", async function () {
             autoplay: { delay: 3000, disableOnInteraction: false },
             pagination: { el: ".swiper-pagination", clickable: true },
             navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-            lazy: true,
+            lazy: { loadPrevNext: true }, // Ensures next/prev images preload
         });
+        
+        setTimeout(() => {
+            swiper.lazy.load();
+        }, 500);
 
     } catch (error) {
         console.error("Error loading images:", error);
