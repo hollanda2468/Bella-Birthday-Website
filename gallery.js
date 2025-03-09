@@ -1,63 +1,46 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const imageFolder = "assets/images/";
-    try {
-        const response = await fetch("image-list.txt");
-        if (!response.ok) throw new Error("Failed to fetch image-list.txt");
+    const response = await fetch("image-list.txt");
+    const imageFiles = (await response.text()).trim().split("\n");
 
-        const text = await response.text();
-        console.log("Loaded image list:", text); // ✅ Debugging step
+    const gallery = document.getElementById("gallery");
 
-        const imageFiles = text.trim().split("\n");
-        const gallery = document.getElementById("gallery");
+    // Populate the Swiper slider with images
+    imageFiles.forEach((file) => {
+        let slide = document.createElement("div");
+        slide.classList.add("swiper-slide");
 
-        // Clear existing content to prevent duplicates
-        gallery.innerHTML = "";
+        let img = document.createElement("img");
+        img.setAttribute("data-src", imageFolder + file); // Lazy load using data-src
+        img.alt = "Memory";
+        img.classList.add("swiper-lazy");
 
-        // Populate Swiper with images
-        imageFiles.forEach((file) => {
-            let slide = document.createElement("div");
-            slide.classList.add("swiper-slide");
+        let loader = document.createElement("div");
+        loader.classList.add("swiper-lazy-preloader");
 
-            let img = document.createElement("img");
-            img.src = `${imageFolder}${file.trim()}`;
-            img.alt = "Memory";
-            img.classList.add("swiper-lazy");
-            img.loading = "lazy";
+        slide.appendChild(img);
+        slide.appendChild(loader);
+        gallery.appendChild(slide);
+    });
 
-            slide.appendChild(img);
-            gallery.appendChild(slide);
-        });
+    // Initialize Swiper.js with Lazy Loading
+    let swiper = new Swiper(".swiper", {
+        loop: true,
+        autoplay: { delay: 5000, disableOnInteraction: false },
+        pagination: { el: ".swiper-pagination", clickable: true },
+        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+        lazy: true, // Enables lazy loading
+    });
 
-        // ✅ Initialize Swiper AFTER images are added
-        let swiper = new Swiper(".swiper", {
-            loop: true,
-            autoplay: { delay: 3000, disableOnInteraction: false },
-            pagination: { el: ".swiper-pagination", clickable: true },
-            navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-            lazy: { loadPrevNext: true }, // ✅ Lazy loading enabled
-        });
-
-        // ✅ Ensure Swiper.lazy exists before using it
-        if (swiper.lazy && typeof swiper.lazy.load === "function") {
-            console.log("Swiper Lazy Load initialized successfully.");
-            swiper.lazy.load();
+    // Play/Pause Button Logic
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    playPauseBtn.addEventListener("click", function () {
+        if (swiper.autoplay.running) {
+            swiper.autoplay.stop();
+            playPauseBtn.textContent = "▶ Play";
         } else {
-            console.warn("Swiper Lazy Load not available.");
+            swiper.autoplay.start();
+            playPauseBtn.textContent = "⏸ Pause";
         }
-
-        // ✅ Fix Play/Pause Button
-        const playPauseBtn = document.getElementById("playPauseBtn");
-        playPauseBtn.addEventListener("click", function () {
-            if (swiper.autoplay.running) {
-                swiper.autoplay.stop();
-                playPauseBtn.textContent = "▶ Play";
-            } else {
-                swiper.autoplay.start();
-                playPauseBtn.textContent = "⏸ Pause";
-            }
-        });
-
-    } catch (error) {
-        console.error("Error loading images:", error);
-    }
+    });
 });
