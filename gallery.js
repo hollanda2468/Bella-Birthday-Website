@@ -10,12 +10,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         const imageFiles = text.trim().split("\n");
         const gallery = document.getElementById("gallery");
 
+        // Populate the Swiper slider with images
         imageFiles.forEach((file) => {
             let slide = document.createElement("div");
             slide.classList.add("swiper-slide");
 
             let img = document.createElement("img");
-            img.setAttribute("data-src", imageFolder + file);
+            img.setAttribute("data-src", `${imageFolder}${file.trim()}`); // Lazy load image
             img.alt = "Memory";
             img.classList.add("swiper-lazy");
 
@@ -27,20 +28,16 @@ document.addEventListener("DOMContentLoaded", async function () {
             gallery.appendChild(slide);
         });
 
+        // ✅ Initialize Swiper AFTER images are added
         let swiper = new Swiper(".swiper", {
             loop: true,
             autoplay: { delay: 3000, disableOnInteraction: false },
             pagination: { el: ".swiper-pagination", clickable: true },
             navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-            lazy: { loadPrevNext: true }, // Ensures next/prev images preload
+            lazy: { loadPrevNext: true }, // Ensure lazy loading is enabled
         });
-        
-        setTimeout(() => {
-            swiper.lazy.load();
-        }, 500);
 
     } catch (error) {
         console.error("Error loading images:", error);
     }
 });
-
