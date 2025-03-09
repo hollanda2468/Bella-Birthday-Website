@@ -251,3 +251,14 @@ button:hover {
     width: auto; /* Maintain aspect ratio */
     display: block;
 }
+
+
+.nav-links a.active {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.mobile-menu a.active {
+    text-decoration: underline;
+    font-weight: bold;
+}
