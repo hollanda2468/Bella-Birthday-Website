@@ -26,11 +26,19 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Initialize Swiper.js with Lazy Loading
     let swiper = new Swiper(".swiper", {
         loop: true,
-        autoplay: { delay: 5000, disableOnInteraction: false },
+        autoplay: { delay: 3000, disableOnInteraction: false },
         pagination: { el: ".swiper-pagination", clickable: true },
         navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-        lazy: true, // Enables lazy loading
+        lazy: { loadPrevNext: true },
+        on: {
+            init: function () {
+                setTimeout(() => {
+                    swiper.lazy.load(); // Manually force lazy load
+                }, 300);
+            }
+        }
     });
+    
 
     // Play/Pause Button Logic
     const playPauseBtn = document.getElementById("playPauseBtn");
