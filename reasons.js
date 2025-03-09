@@ -94,3 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 2000); // 2-second delay before revealing
     });
 });
+
+function toggleMenu() {
+    document.querySelector(".mobile-menu").classList.toggle("show");
+}
