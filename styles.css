@@ -153,6 +153,10 @@ nav {
     .content {
         padding: 40px 10px;
     }
+
+    .logo img {
+        height: 40px; /* Smaller logo for mobile */
+    }
 }
 
 
@@ -239,4 +243,11 @@ button:hover {
 
 #playPauseBtn:hover {
     background-color: #d81b60;
+}
+
+
+.logo img {
+    height: 50px; /* Adjust size as needed */
+    width: auto; /* Maintain aspect ratio */
+    display: block;
 }
