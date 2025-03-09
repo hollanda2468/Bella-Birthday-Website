@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday, My Love! 💖</title>
+    <title>Memories 💖</title>
     <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script defer src="gallery.js"></script>
 </head>
 <body>
 
@@ -31,14 +33,23 @@
 
     <!-- Hero Section -->
     <header class="hero">
-        <h1>Happy Birthday, Bella! 💕</h1>
-        <p>You make every moment special, and this site is just a small way to celebrate you! 🎉</p>
+        <h1>Our Memories Together 💕</h1>
+        <p>Here are some of our most beautiful moments, captured forever. 😘</p>
     </header>
 
-    <!-- Main Content -->
+    <!-- Gallery Section -->
     <main class="content">
-        <h2>Welcome to Your Special Page 💘</h2>
-        <p>Here, you’ll find memories, love notes, and surprises just for you! I hope every time you visit, it makes you smile.</p>
+        <div class="gallery-container">
+            <div class="swiper">
+                <div class="swiper-wrapper" id="gallery">
+                    <!-- Images will be dynamically added here -->
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+            <button id="playPauseBtn">⏸ Pause</button>
+        </div>
     </main>
 
 </body>
