@@ -1,0 +1,67 @@
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffe6f2;
+    color: #ff66a3;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Flipbook Container */
+#flipbook-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ff66a3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+/* Flipbook Effect */
+#flipbook {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.flip-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    animation: flipbook-animation 1s steps(1) infinite;
+}
+
+@keyframes flipbook-animation {
+    0% { opacity: 1; }
+    20% { opacity: 0; }
+    40% { opacity: 1; }
+    60% { opacity: 0; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Hide Main Content Initially */
+.hidden {
+    display: none;
+}
+
+/* Smooth Transition for Main Content */
+#main-content {
+    animation: fade-in 1s ease-in-out forwards;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
