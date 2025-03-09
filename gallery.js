@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const imageFolder = "assets/images/";
-    const response = await fetch(imageFolder + "image-list.txt");
+    const response = await fetch("image-list.txt");
     const imageFiles = (await response.text()).trim().split("\n");
 
     const gallery = document.getElementById("gallery");
