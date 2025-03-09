@@ -6,7 +6,6 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
-    padding-top: 80px;
 }
 
 /* Navigation Bar */
@@ -20,6 +19,17 @@ nav {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 }
+
+/* On mobile landscape, disable sticky navbar */
+@media screen and (max-width: 900px) and (orientation: landscape) {
+    nav {
+        position: relative; /* Allows scrolling */
+    }
+
+    body {
+        padding-top: 0px; /* Prevents excess spacing */
+    }
+}   
 
 .nav-container {
     display: flex;
@@ -39,7 +49,7 @@ nav {
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 30px;
 }
 
 .nav-links li {
@@ -302,8 +312,8 @@ canvas {
     font-size: 48px;
     font-weight: bold;
     color: #ff4081;
-    margin-top: 80px; /* Pushes it below the navbar */
-    margin-bottom: 10px; /* Space between title and game */
+    margin-top: 100px; /* Pushes it below the navbar */
+    margin-bottom: 0px; /* Space between title and game */
     position: relative;
     z-index: 5; /* Ensures it's above other elements */
 }
