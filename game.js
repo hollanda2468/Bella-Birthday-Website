@@ -1,6 +1,9 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
+const playerImage = new Image();
+playerImage.src = "assets/player.png";
+
 canvas.width = window.innerWidth * 0.8; // Make it responsive
 canvas.height = 300;
 
@@ -9,26 +12,20 @@ let score = 0;
 let speed = 3; // Game speed (increases over time)
 let gravity = 0.6;
 
-// Character
+
 let player = {
     x: 50,
     y: canvas.height - 60,
     width: 50,
     height: 50,
     velocityY: 0,
-    jumping: false
+    jumping: false,
+    ducking: false // New state
 };
+
 
 // Obstacles
 let obstacles = [];
-
-// // Handle Jump
-// document.addEventListener("keydown", function (event) {
-//     if (event.code === "Space" && !player.jumping) {
-//         player.velocityY = -12;
-//         player.jumping = true;
-//     }
-// });
 
 function jump() {
     if (!player.jumping) {
@@ -48,6 +45,7 @@ document.addEventListener("keydown", function (event) {
 document.addEventListener("touchstart", function () {
     jump();
 });
+
 
 
 // Start the Game
@@ -78,8 +76,10 @@ function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw Player
-    ctx.fillStyle = "#ff4081";
-    ctx.fillRect(player.x, player.y, player.width, player.height);
+    ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+    player.width = 60;  // Adjust to match the aspect ratio
+    player.height = 60; // Adjust to match the image size
+
 
     // Apply Gravity
     player.velocityY += gravity;
