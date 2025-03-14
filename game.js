@@ -7,6 +7,10 @@ playerImage.src = "assets/player.png";
 const proseccoImage = new Image();
 proseccoImage.src = "assets/prosecco.png"; // Ensure the path is correct
 
+const backgroundImage = new Image();
+backgroundImage.src = "assets/background.jpg"; // Change to your actual image path
+
+
 let proseccoBottles = [];
 let proseccoMeter = 0;
 const proseccoMessages = [
@@ -102,6 +106,9 @@ function gameLoop() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // **Draw background first**
+    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+
     // Draw Player
     ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
     player.width = 60;  // Adjust to match the aspect ratio
@@ -136,7 +143,7 @@ function gameLoop() {
         obstacles[i].x -= speed;
 
         // Draw Obstacle
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "white";
         ctx.fillRect(obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
 
         // Collision Detection
