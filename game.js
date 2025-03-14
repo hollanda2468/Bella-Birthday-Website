@@ -4,6 +4,24 @@ const ctx = canvas.getContext("2d");
 const playerImage = new Image();
 playerImage.src = "assets/player.png";
 
+const proseccoImage = new Image();
+proseccoImage.src = "assets/prosecco.png"; // Ensure the path is correct
+
+let proseccoBottles = [];
+let proseccoMeter = 0;
+const proseccoMessages = [
+    "You're on fire! 🔥",
+    "Prosecco Power! 🍾",
+    "You're unstoppable! 💪",
+    "Keep going, my love! 💖",
+    "Double the love, double the score! ❤️",
+    "More prosecco, more fun! 🍷",
+    "You're a Prosecco Queen! 👑",
+    "Pop the bottles! 🎉",
+    "I could be convinced to go out",
+    "Should we smoke too?"
+];
+
 canvas.width = window.innerWidth * 0.8; // Make it responsive
 canvas.height = 300;
 
@@ -55,17 +73,26 @@ document.getElementById("startScreen").addEventListener("click", function () {
     }
 });
 
+
 function resetGame() {
     gameRunning = true;
     score = 0;
     speed = 3;
     obstacles = []; // Remove old obstacles
+    proseccoBottles = []; // Clear prosecco bottles
+    proseccoMeter = 0; // Reset prosecco meter
     player.y = canvas.height - 60;
     player.velocityY = 0;
-    document.getElementById("score").innerText = "Score: 0"; // Reset score display
-    document.getElementById("startScreen").style.display = "none"; // Hide start screen
+
+    // Reset UI elements
+    document.getElementById("score").innerText = "Score: 0"; 
+    document.getElementById("prosecco-meter").style.width = "0%"; // ✅ Reset prosecco meter UI
+    document.getElementById("prosecco-message").style.display = "none"; // ✅ Hide message
+
+    document.getElementById("startScreen").style.display = "none"; 
     gameLoop();
 }
+
 
 let obstacleCooldown = 80; // Prevents obstacles from appearing too frequently
 let obstacleTimer = 0;
@@ -127,6 +154,62 @@ function gameLoop() {
 
     // Remove passed obstacles
     obstacles = obstacles.filter((obstacle) => obstacle.x > -30);
+
+    // Spawn prosecco bottles after score 800
+    if (score > 800 && Math.random() < 0.02) { 
+        proseccoBottles.push({
+            x: canvas.width,
+            y: canvas.height - 150, // High enough to require a jump
+            width: 30,
+            height: 40
+        });
+    }
+
+    // Move and draw prosecco bottles
+    for (let i = 0; i < proseccoBottles.length; i++) {
+        proseccoBottles[i].x -= speed;
+
+        // Draw prosecco bottle
+        ctx.drawImage(proseccoImage, proseccoBottles[i].x, proseccoBottles[i].y, 30, 40);
+
+        // Collision Detection for Prosecco Bottles
+        if (
+            player.x < proseccoBottles[i].x + 30 &&
+            player.x + player.width > proseccoBottles[i].x &&
+            player.y < proseccoBottles[i].y + 40
+        ) {
+            proseccoBottles.splice(i, 1); // Remove bottle after collection
+            i--;
+
+            // Increase prosecco meter
+            proseccoMeter += 12.5; // 1/8 of 100%
+
+            // Update prosecco meter UI
+            document.getElementById("prosecco-meter").style.width = `${proseccoMeter}%`;
+
+            // Check if the meter is full
+            if (proseccoMeter >= 100) {
+                score *= 2; // Double the score
+                proseccoMeter = 0; // Reset meter
+                document.getElementById("prosecco-meter").style.width = "0%";
+
+                // Show a random message
+                let message = proseccoMessages[Math.floor(Math.random() * proseccoMessages.length)];
+                let messageBox = document.getElementById("prosecco-message");
+                messageBox.innerText = message;
+                messageBox.style.display = "block";
+
+                // Hide message after 3 seconds
+                setTimeout(() => {
+                    messageBox.style.display = "none";
+                }, 3000);
+            }
+        }
+    }
+
+    // Remove off-screen prosecco bottles
+    proseccoBottles = proseccoBottles.filter(bottle => bottle.x > -30);
+
 
     // Increase Score
     score++;
