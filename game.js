@@ -20,9 +20,9 @@ const proseccoMessages = [
     "Keep going, my love! 💖",
     "Double the love, double the score! ❤️",
     "More prosecco, more fun! 🍷",
-    "You're a Prosecco Queen! 👑",
+    "You're a Prosecco Princess! 👑",
     "Pop the bottles! 🎉",
-    "I could be convinced to go out",
+    "I could be convinced to go out 👀",
     "Should we smoke too?"
 ];
 
@@ -111,8 +111,8 @@ function gameLoop() {
 
     // Draw Player
     ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
-    player.width = 60;  // Adjust to match the aspect ratio
-    player.height = 60; // Adjust to match the image size
+    player.width = 70;  // Adjust to match the aspect ratio
+    player.height = 70; // Adjust to match the image size
 
 
     // Apply Gravity
@@ -120,8 +120,8 @@ function gameLoop() {
     player.y += player.velocityY;
 
     // Prevent falling through the ground
-    if (player.y >= canvas.height - 60) {
-        player.y = canvas.height - 60;
+    if (player.y >= canvas.height - 70) {
+        player.y = canvas.height - 70;
         player.jumping = false;
     }
 
@@ -166,9 +166,9 @@ function gameLoop() {
     if (score > 800 && Math.random() < 0.02) { 
         proseccoBottles.push({
             x: canvas.width,
-            y: canvas.height - 150, // High enough to require a jump
-            width: 30,
-            height: 40
+            y: canvas.height - 170, // High enough to require a jump
+            width: 50,
+            height: 70
         });
     }
 

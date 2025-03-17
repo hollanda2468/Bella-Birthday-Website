@@ -16,7 +16,6 @@ const reasons = [
     "How much you believe in me",
     "You’re never afraid to speak your mind",
     "You’re an incredible leader",
-    "You’re an incredible friend",
     "You notice when I’m off and ask what’s wrong",
     "How passionate you are about AFA and Alzheimer’s research",
     "How you listen when I talk about the things I love",
